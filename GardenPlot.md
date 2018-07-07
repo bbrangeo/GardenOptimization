@@ -54,3 +54,14 @@ Checking these lists, we see that the end of veglist and timelist has a strange 
 del veglist[-1]
 del timelist[-1]
 ```
+Now that the columns are all equal sizes and lined up, they go into the data frame as
+```
+farm['Veg']=veglist
+farm['Days']=timelist
+farm['Size']=sizelist
+```
+N.B.  it may help to change the display properties so that the data shows up explicity, not as "...." depending on your interface.  The following fixed my issue
+```
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
+```
