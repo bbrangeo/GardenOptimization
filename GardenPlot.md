@@ -47,5 +47,10 @@ veglist=[data[i] for i in range(6,203,5)]
 Similarly for the days to maturity and the size of each plant, we do the same but index our starting point by 1 
 ```
 timelist=[data[i] for i in range(7,203,5)]
-sizelist=[data[i] for i in range(7,203,5)]
+sizelist=[data[i] for i in range(8,203,5)]
+```
+Checking these lists, we see that the end of veglist and timelist has a strange entry about "*from set bulbs*'.  This comes from the original table on the webpage that had joined cells at the bottom.  This would not allow the dataframe to be constructed by columns since they have different lengths.  We can check the length of each list just made and we see that **len(veglist)=40 , len(sizelist)=40, len(timelist)=39**.  This can be fixed by deleting the last element of veglist and sizelist 
+```
+del veglist[-1]
+del timelist[-1]
 ```
