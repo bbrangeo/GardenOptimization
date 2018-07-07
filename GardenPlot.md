@@ -1,8 +1,10 @@
-#Garden Optimization
-##Optimizing the use of a garden space using the veggies growth rate and size
+# Garden Optimization
+## Optimizing the use of a garden space using the veggies growth rate and size
+
 
 The data set comes from Iowa State University's "Vegetable Harvest Guide" at https://hortnews.extension.iastate.edu/2004/7-23-2004/vegguide.html.  This gives the name of the vegetable, the number of days to maturity, the size of the plant, color attributes, and the comments for each veggie.  We wanto to collect the name of the veggie, the days to maturity, and the size into a pandas data frame.
 
+### Part 1 - Collecting the Data
 To start with, lets import everything we will need.
 ```
 import pandas as pd #to work with the data#
@@ -25,4 +27,25 @@ Next, we parse this further by separating every cell to its own element in a new
 ```
 data=[data_cells[i].text.strip('\n') for i in range(len(data_cells)-1)]
 ```
+The first few elements of this list are
+```
+in: data[:10]
+out: ['Vegetable Harvest Guide', 'Vegetable', 'Days  to Maturity ', 'Size  ', 'Color', 'Comment', 
+     'Beet', '50-70', '2-3   in diameter', 'red,  varies with cultivar']
+```
+This is pretty good. Tt contains the data that we want, plus some extra items that need to be cleaned up
 
+### Part 2 - Cleaning the Data
+This data will be put into a pandas data frame, so first, let's make a data frame named 'farm' with the columns 'Veg', 'Days', and 'Size'
+```
+farm=pd.DataFrame(columns=('Veg','Days','Size'))
+```
+We'll fill this frame column by column, using the pattern of the 'data' list above.  We see from **data[:10]** that we dont want the first 7 elements.  Then, each veggie repeats every 6 items.  We can also find that the total lenght of our data list is 204, and remember that the **len** function is 1 based, not zero based.  So we can make a list of veggies using
+```
+veglist=[data[i] for i in range(6,203,5)]
+```
+Similarly for the days to maturity and the size of each plant, we do the same but index our starting point by 1 
+```
+timelist=[data[i] for i in range(7,203,5)]
+sizelist=[data[i] for i in range(7,203,5)]
+```
