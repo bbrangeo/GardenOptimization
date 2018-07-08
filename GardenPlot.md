@@ -236,10 +236,10 @@ ax=fig.gca()
 pp.xlim(-5,75)
 pp.ylim(-5,50)
 
-
-
 x=np.arange(0,72,1)
 y=[[i for xp in x] for i in range(48)]
 for i in range(48):
     pp.plot(x,y[i],'bo', markersize=1)
-    ```
+pp.show()
+```
+![Empty Garden Box]https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png
