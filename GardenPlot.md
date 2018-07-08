@@ -40,7 +40,7 @@ This data will be put into a pandas data frame, so first, let's make a data fram
 ```
 farm=pd.DataFrame(columns=('Veg','Days','Size'))
 ```
-We'll fill this frame column by column, using the pattern of the 'data' list above.  We see from **data[:10]** that we dont want the first 7 elements.  Then, each veggie repeats every 6 items.  We can also find that the total lenght of our data list is 204, and remember that the **len** function is 1 based, not zero based.  So we can make a list of veggies using
+We'll fill this frame column by column, using the structure of the 'data' list above.  We see from **data[:10]** that we dont want the first 7 elements.  Then, each veggie contains 6 information cells.  We can also find that the total lenght of our data list is 204, and remember that the **len** function is 1 based, not zero based.  So we can make a list of veggies using
 ```
 veglist=[data[i] for i in range(6,203,5)]
 ```
