@@ -172,4 +172,48 @@ This now brings the farm data frame his
 32                Watermelon   90.0            varies  with cultivar
 33            Winter  Squash  102.5            varies  with cultivar
 ```
-Next step in cleaning the data is to quantify the final column of sizes. This is not as straightforward as computing the averages since many of the plants have the entry "varies with cultivar", which means there is a large variation depending on which variety and which lineage of seeds you have.  So in this case, we can fill in the data with estimated values based on educated guesses.  Turns out I know a bit about gardening [js gardens portfolio](https://www.instagram.com/jsgardens/), so the numbers will be appropriate.  The value for the size should represent the plant at it's largest size during harvest.
+Next step in cleaning the data is to quantify the final column of sizes. This is not as straightforward as computing the averages since many of the plants have the entry "varies with cultivar", which means there is a large variation depending on which variety and which lineage of seeds you have.  So in this case, we can fill in the data with estimated values based on educated guesses.  Turns out I know a bit about gardening [js gardens portfolio](https://www.instagram.com/jsgardens/), so the numbers will be appropriate.  The value for the size should represent the amount of space the plant will occupy at the soil level when at it's largest size during harvest.  Some of the values are the size of the vegetable or fruit which is not the right value for space optimization.  A good rule of thumb is that a plant usually needs about a foot square, or 12 inches square.  Some plants, like tomatoes, beans, , and cucumbers could take a lot of vertical space and require trellises, but we wont include those details here.  These plants can be very happy in a 12 in square cage.  Squashes, though, tend to spread pretty far.
+
+We made a list of numbers that were appropriate, using the exiting numbers when available, and put that list into the farm data frame with
+```python
+new_size_list=[2, 7, 10, 0.75, 8, 16, 15, 12, 3, 3, 6, 16, 12, 3, 3, 12, 12, 12, 12, 12, 16, 20, 2, 2, 12, 5, 16, 16, 8, 16, 16, 2, 20, 20]
+farm.Size=new_size_list
+```
+Then finally here is our farm data frame.  
+```
+                        Veg   Days   Size
+0                       Beet   60.0   2.00
+1                   Broccoli   57.5   7.00
+2                    Cabbage   75.0  10.00
+3                     Carrot   70.0   0.75
+4                Cauliflower   67.5   8.00
+5         Cucumber  Pickling   60.0  16.00
+6          Cucumber  Slicing   60.0  15.00
+7                   Eggplant   82.5  12.00
+8                     Garlic   90.0   3.00
+9                   Kohlrabi   62.5   3.00
+10           Lettuce  (leaf)   52.5   6.00
+11   Muskmelon    Cantaloupe   87.5  16.00
+12                      Okra   57.5  12.00
+13                     Onion  110.0   3.00
+14                   Parsnip  120.0   3.00
+15         Peas Snow (Sugar)   70.0  12.00
+16                Peas Snap    70.0  12.00
+17            Garden (Shell)   70.0  12.00
+18              Pepper Hot     75.0  12.00
+19              PepperPepper   80.0  12.00
+20                    Potato  105.0  16.00
+21                   Pumpkin  102.5  20.00
+22            Radish  Spring   32.5   2.00
+23            Radish  Winter   57.5   2.00
+24   Snap  Bean (Green Bean)   60.0  12.00
+25                   Spinach   52.5   5.00
+26   Summer  squash  Scallop   55.0  16.00
+27  Summer  squash  Zucchini   55.0  16.00
+28               Sweet  Corn   87.5   8.00
+29             Sweet  Potato  112.5  16.00
+30                    Tomato   80.0  16.00
+31                    Turnip   57.5   2.00
+32                Watermelon   90.0  20.00
+33            Winter  Squash  102.5  20.00
+```
