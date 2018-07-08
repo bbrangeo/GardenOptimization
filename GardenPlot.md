@@ -131,7 +131,7 @@ days=[list(map(int,days.strip(' ').strip(*'*').split('-'))) for days in farm['Da
 ```
 Then finding the average is simple, just be aware that **not every cell has two entries, so dont divide by 2, divide by len([list])** and then put this list back into the farm data frame
 ```python
-days=[sum(time)/len(time) for time in day2] #compute averages of each cell
+days=[sum(time)/len(time) for time in days] #compute averages of each cell
 farm['Days']=days  #replace Days column with average values
 ```
 This now brings the farm data frame his
