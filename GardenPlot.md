@@ -33,7 +33,7 @@ in: data[:10]
 out: ['Vegetable Harvest Guide', 'Vegetable', 'Days  to Maturity ', 'Size  ', 'Color', 'Comment', 
      'Beet', '50-70', '2-3   in diameter', 'red,  varies with cultivar']
 ```
-This is pretty good. Tt contains the data that we want, plus some extra items that need to be cleaned up
+This is pretty good. It contains the data that we want, plus some extra items that need to be cleaned up
 
 # Part 2 - Cleaning the Data
 This data will be put into a pandas data frame, so first, let's make a data frame named 'farm' with the columns 'Veg', 'Days', and 'Size'
