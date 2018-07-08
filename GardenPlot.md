@@ -65,3 +65,19 @@ N.B.  it may help to change the display properties so that the data shows up exp
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 ```
+The next thing that needs to be cleaned is the rows that are missing the "days" and "size" data.  There are actually multiple varieties for some of the veggie entries.  Since the data was not tagged in the html source, it needs to be cleaned up manually.  For this, we simply look at the veggies that have multiple varieties below and then modify the name in the "Veg" column to contain the name and variety.  For example, 'pickling' in row 6 will become 'Cucumber pickling'.  After we change the names, we can delete the row without data.  
+```
+farm.loc[6][0]= ((farm.loc[5][0]+farm.loc[6][0]).replace("   "," "))##change cucumbers
+farm.loc[7][0]= ((farm.loc[5][0]+farm.loc[7][0]).replace("   "," "))##change cucumbers
+
+farm.loc[17][0]= ((farm.loc[16][0]+farm.loc[17][0]).replace("   "," "))##peas
+farm.loc[18][0]= ((farm.loc[16][0]+farm.loc[18][0]).replace("   "," "))#peas
+.
+.
+.#for the other duplicate varieties
+```
+Then we remove these rows with **drop(index=[rows])** and reindex the array with **reindex**
+```
+farm=farm.drop(index=[5,16,20,25,30])
+farm.reindex
+```
