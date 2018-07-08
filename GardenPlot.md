@@ -2,7 +2,7 @@
 ## Optimizing the Use of a Garden Space Using the Veggies' Growth Rates and Sizes
 
 
-The data set comes from Iowa State University's "Vegetable Harvest Guide" at https://hortnews.extension.iastate.edu/2004/7-23-2004/vegguide.html.  This gives the name of the vegetable, the number of days to maturity, the size of the plant, color attributes, and the comments for each veggie.  We wanto to collect the name of the veggie, the days to maturity, and the size into a pandas data frame.
+The data set comes from Iowa State University's "Vegetable Harvest Guide" at https://hortnews.extension.iastate.edu/2004/7-23-2004/vegguide.html.  This gives the name of the vegetable, the number of days to maturity, the size of the plant, color attributes, and the comments for each veggie.  Note that this data will be specific to Iowa, although it is applicable to most growing conditions.  We wanto to collect the name of the veggie, the days to maturity, and the size into a pandas data frame.
 
 # Part 1 - Collecting the Data
 To start with, lets import everything we will need.
@@ -217,3 +217,6 @@ Then finally here is our farm data frame.
 32                Watermelon   90.0  20.00
 33            Winter  Squash  102.5  20.00
 ```
+
+# Part 3 - Modeling a Garden Space #
+To decide what to plant, we will set up a graphical description of what plants are growing and when.  
