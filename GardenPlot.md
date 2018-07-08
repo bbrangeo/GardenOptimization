@@ -41,7 +41,7 @@ This data will be put into a pandas data frame, so first, let's make a data fram
 farm=pd.DataFrame(columns=('Veg','Days','Size'))
 ```
 We'll fill this frame column by column, using the structure of the 'data' list above.  We see from **data[:10]** that we dont want the first 7 elements.  Then, each veggie contains 6 cells of information, so we can index by 6 for each subsequent piece of information that we want.  We can also find with **len(data)** that the total length of the data list is 204, and remember that the **len** function is 1 based, not zero based.  So we can make a list of veggies using
-```pytohn
+```python
 veglist=[data[i] for i in range(6,203,5)]
 ```
 Similarly for the days to maturity and the size of each plant, we do the same but index our starting point by 1 
@@ -61,7 +61,7 @@ farm['Days']=timelist
 farm['Size']=sizelist
 ```
 N.B.  it may help to change the display properties so that the data shows up explicity, not as "...." depending on your interface.  The following fixed my issue
-```python
+```
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
