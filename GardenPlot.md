@@ -64,6 +64,47 @@ N.B.  it may help to change the display properties so that the data shows up exp
 ```
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
+
+                         Veg                 Days                             Size
+0                       Beet                50-70                2-3   in diameter
+1                   Broccoli               50-65*                  6 to  7  across
+2                    Cabbage               60-90*            varies  with cultivar
+3                     Carrot                60-80                3/4   in diameter
+4                Cauliflower               55-80*                  6 to 8   across
+5                   Cucumber                                                      
+6         Cucumber  Pickling                55-65                       2-4   long
+7          Cucumber  Slicing                55-65                       6-8   long
+8                   Eggplant               75-90*            varies  with cultivar
+9                     Garlic                 90**                              2-3
+10                  Kohlrabi                55-70                   2-3   diameter
+11           Lettuce  (leaf)                45-60                       4-6   long
+12   Muskmelon    Cantaloupe               75-100               5-10   in diameter
+13                      Okra                50-65                         3   long
+14                     Onion  100-120  90-100**              varies  with cultivar
+15                   Parsnip              110-130                      8-18"  long
+16                      Peas                                                      
+17         Peas Snow (Sugar)                55-85                    3   long pods
+18                Peas Snap                 55-85                    3  long  pods
+19            Garden (Shell)                55-85                    3   long pods
+20                    Pepper                                                      
+21              Pepper Hot                 60-90*                    1 to  3  long
+22              PepperPepper               70-90*            2 to  4  in diameter 
+23                    Potato               90-120            varies  with cultivar
+24                   Pumpkin               85-120            varies  with cultivar
+25                    Radish                                                      
+26            Radish  Spring                25-40          1/2   to 2  in diameter
+27            Radish  Winter                45-70                      6-12   long
+28   Snap  Bean (Green Bean)                50-70         4 to  6      long       
+29                   Spinach                45-60                       6-8   tall
+30            Summer  squash                                                      
+31   Summer  squash  Scallop                50-60             3 to  5  in diameter
+32  Summer  squash  Zucchini                50-60                   6 to  12  long
+33               Sweet  Corn               70-105  5 to  10 , varies with cultivar
+34             Sweet  Potato              100-125            varies  with cultivar
+35                    Tomato               70-90*            varies  with cultivar
+36                    Turnip                45-70                2-3   in diameter
+37                Watermelon               80-100            varies  with cultivar
+38            Winter  Squash               85-120            varies  with cultivar   
 ```
 The next thing that needs to be cleaned is the rows that are missing the "days" and "size" data.  There are actually multiple varieties for some of the veggie entries.  Since the data was not tagged in the html source, it needs to be cleaned up manually.  For this, we simply look at the veggies that have multiple varieties below and then modify the name in the "Veg" column to contain the name and variety.  For example, 'pickling' in row 6 will become 'Cucumber pickling'.  After we change the names, we can delete the row without data.  
 ```
@@ -84,7 +125,7 @@ This now is a cleaned data set with the information that we want.  Thinking ahea
 ```
 farm.loc[13][1]='100-120'# change the days for row 13
 ```
-Then we want to remove the asteriks and trailing whitespaces.  The single and double asteriks can be removed together with the expression **strip(*'*')**  and then we split the data over the hyphen. In order to find the average, we need to change every entry to a pair of integers.  This is accomplished with the **map(int, [list])** function. The **map** works very well here because each element in the list is also a list, and that is ok for **map**  All this can go into a single list comprehension to make a temporary list of the number pairs 
+Then we want to remove the asteriks and trailing whitespaces.  The single and double asteriks can be removed together with the expression **strip(*'*')** which removes any number of asteriks, and then we split the data over the hyphen. In order to find the average, we need to change every entry to a pair of integers.  This is accomplished with the **map(int, [list])** function. The **map** works very well here because each element in the list is also a list, and that is ok for **map**  All this can go into a single list comprehension to make a temporary list of the number pairs 
 ```
 days=[list(map(int,days.strip(' ').strip(*'*').split('-'))) for days in farm['Days']]##change all entries to pairs of integers
 ```
@@ -93,3 +134,42 @@ Then finding the average is simple, just be aware that **not every cell has two 
 days=[sum(time)/len(time) for time in day2] #compute averages of each cell
 farm['Days']=days  #replace Days column with average values
 ```
+This now brings the farm data frame his
+```
+                         Veg   Days                             Size
+0                       Beet   60.0                2-3   in diameter
+1                   Broccoli   57.5                  6 to  7  across
+2                    Cabbage   75.0            varies  with cultivar
+3                     Carrot   70.0                3/4   in diameter
+4                Cauliflower   67.5                  6 to 8   across
+5         Cucumber  Pickling   60.0                       2-4   long
+6          Cucumber  Slicing   60.0                       6-8   long
+7                   Eggplant   82.5            varies  with cultivar
+8                     Garlic   90.0                              2-3
+9                   Kohlrabi   62.5                   2-3   diameter
+10           Lettuce  (leaf)   52.5                       4-6   long
+11   Muskmelon    Cantaloupe   87.5               5-10   in diameter
+12                      Okra   57.5                         3   long
+13                     Onion  110.0            varies  with cultivar
+14                   Parsnip  120.0                      8-18"  long
+15         Peas Snow (Sugar)   70.0                    3   long pods
+16                Peas Snap    70.0                    3  long  pods
+17            Garden (Shell)   70.0                    3   long pods
+18              Pepper Hot     75.0                    1 to  3  long
+19              PepperPepper   80.0            2 to  4  in diameter 
+20                    Potato  105.0            varies  with cultivar
+21                   Pumpkin  102.5            varies  with cultivar
+22            Radish  Spring   32.5          1/2   to 2  in diameter
+23            Radish  Winter   57.5                      6-12   long
+24   Snap  Bean (Green Bean)   60.0         4 to  6      long       
+25                   Spinach   52.5                       6-8   tall
+26   Summer  squash  Scallop   55.0             3 to  5  in diameter
+27  Summer  squash  Zucchini   55.0                   6 to  12  long
+28               Sweet  Corn   87.5  5 to  10 , varies with cultivar
+29             Sweet  Potato  112.5            varies  with cultivar
+30                    Tomato   80.0            varies  with cultivar
+31                    Turnip   57.5                2-3   in diameter
+32                Watermelon   90.0            varies  with cultivar
+33            Winter  Squash  102.5            varies  with cultivar
+```
+Last step in cleaning the data is to quantify the final column of size.  
