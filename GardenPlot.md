@@ -219,4 +219,27 @@ Then finally here is our farm data frame.
 ```
 
 # Part 3 - Modeling a Garden Space #
-To decide what to plant, we will set up a graphical description of what plants are growing and when.  
+To decide what to plant, we will set up a graphical description of what plants are growing and when.  For this, we'll start a new file that can join up with the data set later.  Let's import a few packages that we need
+```python
+import numpy as np
+import matplotlib
+from matplotlib.patches import Circle, Wedge, Polygon
+import matplotlib.pyplot as pp
+from matplotlib.collections import PatchCollection
+import pandas as pd
+```
+The polygon package will draw boxes that represent the size of the plants.  In my old garden, we had a 4 foot by 8 foot plot.  We can make this into a figure element with a little bit of padding around the edges using matplotlib.  For ease of visualization of the locations, we can also plot a grid of dots on top of the box using a list comprehenstion to generate list of discrete lists, and then a for loop to plot the discrete points.   
+```python
+fig=pp.figure(figsize=(10,5))
+ax=fig.gca()
+
+pp.xlim(-5,75)
+pp.ylim(-5,50)
+
+
+
+x=np.arange(0,72,1)
+y=[[i for xp in x] for i in range(48)]
+for i in range(48):
+    pp.plot(x,y[i],'bo', markersize=1)
+    ```
