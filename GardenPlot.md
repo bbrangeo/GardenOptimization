@@ -4,7 +4,7 @@
 
 The data set comes from Iowa State University's "Vegetable Harvest Guide" at https://hortnews.extension.iastate.edu/2004/7-23-2004/vegguide.html.  This gives the name of the vegetable, the number of days to maturity, the size of the plant, color attributes, and the comments for each veggie.  We wanto to collect the name of the veggie, the days to maturity, and the size into a pandas data frame.
 
-### Part 1 - Collecting the Data
+# Part 1 - Collecting the Data
 To start with, lets import everything we will need.
 ```
 import pandas as pd #to work with the data#
@@ -35,7 +35,7 @@ out: ['Vegetable Harvest Guide', 'Vegetable', 'Days  to Maturity ', 'Size  ', 'C
 ```
 This is pretty good. Tt contains the data that we want, plus some extra items that need to be cleaned up
 
-### Part 2 - Cleaning the Data
+# Part 2 - Cleaning the Data
 This data will be put into a pandas data frame, so first, let's make a data frame named 'farm' with the columns 'Veg', 'Days', and 'Size'
 ```
 farm=pd.DataFrame(columns=('Veg','Days','Size'))
@@ -80,7 +80,16 @@ Then we remove these rows with **drop(index=[rows])** and reindex the array with
 ```
 farm=farm.drop(index=[5,16,20,25,30]).reset_index(drop=True)
 ```
-This now is a cleaned data set with the information that we want.  Thinking ahead to the optimization, it would be better if th days to maturity were a single number, instead of a range.  For anyone who has grown their own veggies before, you know that there is always a lot of variation depending on sun, temperature, soil, water, and other variables that are not part of this model.  So to make this easier to quantify, we'll change the time ranges for days to maturity to average values. In order to do this, we need to parse each cell to find the two numbers, and then take the average.  There are some foot notes on these timelines, signaled by asteriks, that refer to whether they are started from seeds or transplants (one asterik), or from bulbs, like garlic or onion, which is signaled with two asteriks.  For simplicity, we will remove these special conditions since they done have much effect on the overall timelines nor does our optimization cover these details.  There is one data point, however, for onions with two time ranges.  Looking at these days, they are again similar, so we will remove the second day range from this cell. We will replace it with a string so that it is the same data type for the averaging over the entire list
+This now is a cleaned data set with the information that we want.  Thinking ahead to the optimization, it would be better if th days to maturity were a single number, instead of a range.  For anyone who has grown their own veggies before, you know that there is always a lot of variation depending on sun, temperature, soil, water, and other variables that are not part of this model.  So to make this easier to quantify, we'll change the time ranges for days to maturity to average values. In order to do this, we need to parse each cell to find the two numbers, and then take the average.  There are some foot notes on these timelines, signaled by asteriks, that refer to whether they are started from seeds or transplants (one asterik), or from bulbs, like garlic or onion, which is signaled with two asteriks.  For simplicity, we will remove these special conditions since they done have much effect on the overall timelines nor does our optimization cover these details.  There is one data point, however, for onions with two time ranges.  Looking at these days, they are again similar, so we will remove the second day range from this cell then replace it with a string so that it is the same data type for the averaging over the entire list
 ```
 farm.loc[13][1]='100-120'# change the days for row 13
+```
+Then we want to remove the asteriks and trailing whitespaces.  The single and double asteriks can be removed together with the expression **strip(*'*')**  and the split over the hyphen. In order to find the average, we need to change every entry to a pair of integers.  This is accomplished with the **map(int, [list])** function. All this can go into a single list comprehension to make a temporary list of the number pairs 
+```
+days=[list(map(int,days.strip(' ').strip(*'*').split('-'))) for days in farm['Days']]##change all entries to pairs of integers
+```
+Then finding the average is simple, just be aware that **not every cell has two entries, so dont divide by 2, divide by len([list])** and then put this list back into the farm data frame
+```
+days=[sum(time)/len(time) for time in days2] #compute averages of each cell
+farm['Days']=days  #replace Days column with average values
 ```
