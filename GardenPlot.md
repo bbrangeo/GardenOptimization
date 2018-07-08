@@ -299,23 +299,19 @@ Watermelon                 90.0  20.00
 Winter  Squash            102.5  20.00
 ```
 
-If you are a hobby farmer with limited space, you'll want to plant things that grow quickly.  So lets look at what is available that grows in 60 days or less
+If you are a hobby farmer with limited space, you'll want to plant things that grow quickly.  So lets look at what is available that grows in 60 days or less and is smaller that 16 inches square and call this a new dataframe called 'plants'
 ```python
+plants=farm2.loc[farm2.Days<61 and farm2.Size<16]
 
-farm2.loc[farm2['Days']<=60]
-
-                          Days  Size
-Beet                      60.0   2.0
-Broccoli                  57.5   7.0
-Cucumber  Pickling        60.0  16.0
-Cucumber  Slicing         60.0  15.0
-Lettuce  (leaf)           52.5   6.0
-Okra                      57.5  12.0
-Radish  Spring            32.5   2.0
-Radish  Winter            57.5   2.0
-Snap  Bean (Green Bean)   60.0  12.0
-Spinach                   52.5   5.0
-Summer  squash  Scallop   55.0  16.0
-Summer  squash  Zucchini  55.0  16.0
-Turnip                    57.5   2.0
+                         Days  Size
+Beet                     60.0   2.0
+Broccoli                 57.5   7.0
+Cucumber  Slicing        60.0  15.0
+Lettuce  (leaf)          52.5   6.0
+Okra                     57.5  12.0
+Radish  Spring           32.5   2.0
+Radish  Winter           57.5   2.0
+Snap  Bean (Green Bean)  60.0  12.0
+Spinach                  52.5   5.0
+Turnip                   57.5   2.0
 ```
