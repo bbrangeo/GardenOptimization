@@ -1,5 +1,5 @@
 # Garden Optimization
-## Optimizing the use of a garden space using the veggies growth rate and size
+## Optimizing the Use of a Garden Space Using the Veggies' Growth Rates and Sizes
 
 
 The data set comes from Iowa State University's "Vegetable Harvest Guide" at https://hortnews.extension.iastate.edu/2004/7-23-2004/vegguide.html.  This gives the name of the vegetable, the number of days to maturity, the size of the plant, color attributes, and the comments for each veggie.  We wanto to collect the name of the veggie, the days to maturity, and the size into a pandas data frame.
