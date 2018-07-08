@@ -72,8 +72,8 @@ pd.set_option('display.width', 1000)
 3                     Carrot                60-80                3/4   in diameter
 4                Cauliflower               55-80*                  6 to 8   across
 5                   Cucumber                                                      
-6         Cucumber  Pickling                55-65                       2-4   long
-7          Cucumber  Slicing                55-65                       6-8   long
+6                   Pickling                55-65                       2-4   long
+7                    Slicing                55-65                       6-8   long
 8                   Eggplant               75-90*            varies  with cultivar
 9                     Garlic                 90**                              2-3
 10                  Kohlrabi                55-70                   2-3   diameter
@@ -83,22 +83,22 @@ pd.set_option('display.width', 1000)
 14                     Onion  100-120  90-100**              varies  with cultivar
 15                   Parsnip              110-130                      8-18"  long
 16                      Peas                                                      
-17         Peas Snow (Sugar)                55-85                    3   long pods
-18                Peas Snap                 55-85                    3  long  pods
+17              Snow (Sugar)                55-85                    3   long pods
+18                     Snap                 55-85                    3  long  pods
 19            Garden (Shell)                55-85                    3   long pods
 20                    Pepper                                                      
-21              Pepper Hot                 60-90*                    1 to  3  long
-22              PepperPepper               70-90*            2 to  4  in diameter 
+21                     Hot                 60-90*                    1 to  3  long
+22                    Pepper               70-90*            2 to  4  in diameter 
 23                    Potato               90-120            varies  with cultivar
 24                   Pumpkin               85-120            varies  with cultivar
 25                    Radish                                                      
-26            Radish  Spring                25-40          1/2   to 2  in diameter
-27            Radish  Winter                45-70                      6-12   long
+26                    Spring                25-40          1/2   to 2  in diameter
+27                    Winter                45-70                      6-12   long
 28   Snap  Bean (Green Bean)                50-70         4 to  6      long       
 29                   Spinach                45-60                       6-8   tall
 30            Summer  squash                                                      
-31   Summer  squash  Scallop                50-60             3 to  5  in diameter
-32  Summer  squash  Zucchini                50-60                   6 to  12  long
+31                   Scallop                50-60             3 to  5  in diameter
+32                  Zucchini                50-60                   6 to  12  long
 33               Sweet  Corn               70-105  5 to  10 , varies with cultivar
 34             Sweet  Potato              100-125            varies  with cultivar
 35                    Tomato               70-90*            varies  with cultivar
