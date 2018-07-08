@@ -76,8 +76,11 @@ farm.loc[18][0]= ((farm.loc[16][0]+farm.loc[18][0]).replace("   "," "))#peas
 .
 .#for the other duplicate varieties
 ```
-Then we remove these rows with **drop(index=[rows])** and reindex the array with **reindex**
+Then we remove these rows with **drop(index=[rows])** and reindex the array with **reset_index**.  The **drop = True** ensures that the old indices are dropped and not added as a new column.
 ```
-farm=farm.drop(index=[5,16,20,25,30])
-farm.reindex
+farm=farm.drop(index=[5,16,20,25,30]).reset_index(drop=True)
+```
+This now is a cleaned data set with the information that we want.  Thinking ahead to the optimization, it would be better if th days to maturity were a single number, instead of a range.  For anyone who has grown their own veggies before, you know that there is always a lot of variation depending on sun, temperature, soil, water, and other variables that are not part of this model.  So to make this easier to quantify, we'll change the time ranges for days to maturity to average values. In order to do this, we need to parse each cell to find the two numbers, and then take the average.  There are some foot notes on these timelines, signaled by asteriks, that refer to whether they are started from seeds or transplants (one asterik), or from bulbs, like garlic or onion, which is signaled with two asteriks.  For simplicity, we will remove these special conditions since they done have much effect on the overall timelines nor does our optimization cover these details.  There is one data point, however, for onions with two time ranges.  Looking at these days, they are again similar, so we will remove the second day range from this cell. We will replace it with a string so that it is the same data type for the averaging over the entire list
+```
+farm.loc[13][1]='100-120'# change the days for row 13
 ```
