@@ -243,3 +243,79 @@ for i in range(48):
 pp.show()
 ```
 ![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png)
+
+
+The polygons that represent the plants are added with a few lines of the **polygon** function, and changing the dots to green because, well because its a garden!
+```python
+patches=[]
+for i in range(50):
+    polygon = Polygon(([2,2],[2,14],[14,14],[14,2]), True)
+    patches.append(polygon)
+
+p = PatchCollection(patches)
+ax.add_collection(p)
+```
+![Plant Example on the Grid](https://github.com/jeffsecor/GardenOptimization/blob/master/examplebox.png)
+
+Pretty good, so now we need to make a list of the plants that are planted, with their sizes, and see how they can fill the space.  Let change our data frame so that we can index based on the vegetable name.  We can make a new data frame, set the index as the list of column values from our original data frame, and then transfer the columns for 'Days' and 'Size'
+```python
+farm2=pd.DataFrame(index=farm['Veg'].tolist(), columns =('Days','Size'))
+farm2['Days']=farm.Days.tolist()
+farm2.Size=farm.Size.tolist() #notice the use of class function here :)
+                           Days   Size
+Beet                       60.0   2.00
+Broccoli                   57.5   7.00
+Cabbage                    75.0  10.00
+Carrot                     70.0   0.75
+Cauliflower                67.5   8.00
+Cucumber  Pickling         60.0  16.00
+Cucumber  Slicing          60.0  15.00
+Eggplant                   82.5  12.00
+Garlic                     90.0   3.00
+Kohlrabi                   62.5   3.00
+Lettuce  (leaf)            52.5   6.00
+Muskmelon    Cantaloupe    87.5  16.00
+Okra                       57.5  12.00
+Onion                     110.0   3.00
+Parsnip                   120.0   3.00
+Peas Snow (Sugar)          70.0  12.00
+Peas Snap                  70.0  12.00
+ Garden (Shell)            70.0  12.00
+Pepper Hot                 75.0  12.00
+PepperPepper               80.0  12.00
+Potato                    105.0  16.00
+Pumpkin                   102.5  20.00
+Radish  Spring             32.5   2.00
+Radish  Winter             57.5   2.00
+Snap  Bean (Green Bean)    60.0  12.00
+Spinach                    52.5   5.00
+Summer  squash  Scallop    55.0  16.00
+Summer  squash  Zucchini   55.0  16.00
+Sweet  Corn                87.5   8.00
+Sweet  Potato             112.5  16.00
+Tomato                     80.0  16.00
+Turnip                     57.5   2.00
+Watermelon                 90.0  20.00
+Winter  Squash            102.5  20.00
+```
+
+If you are a hobby farmer with limited space, you'll want to plant things that grow quickly.  So lets look at what is available that grows in 60 days or less
+```python
+
+farm2.loc[farm2['Days']<=60]
+
+                          Days  Size
+Beet                      60.0   2.0
+Broccoli                  57.5   7.0
+Cucumber  Pickling        60.0  16.0
+Cucumber  Slicing         60.0  15.0
+Lettuce  (leaf)           52.5   6.0
+Okra                      57.5  12.0
+Radish  Spring            32.5   2.0
+Radish  Winter            57.5   2.0
+Snap  Bean (Green Bean)   60.0  12.0
+Spinach                   52.5   5.0
+Summer  squash  Scallop   55.0  16.0
+Summer  squash  Zucchini  55.0  16.0
+Turnip                    57.5   2.0
+```
