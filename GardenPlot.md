@@ -242,4 +242,4 @@ for i in range(48):
     pp.plot(x,y[i],'bo', markersize=1)
 pp.show()
 ```
-![Empty Garden Box]https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png
+![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png)
