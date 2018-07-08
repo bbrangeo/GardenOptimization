@@ -84,7 +84,7 @@ This now is a cleaned data set with the information that we want.  Thinking ahea
 ```
 farm.loc[13][1]='100-120'# change the days for row 13
 ```
-Then we want to remove the asteriks and trailing whitespaces.  The single and double asteriks can be removed together with the expression **strip(*'*')**  and then we split the data over the hyphen. In order to find the average, we need to change every entry to a pair of integers.  This is accomplished with the **map(int, [list])** function. All this can go into a single list comprehension to make a temporary list of the number pairs 
+Then we want to remove the asteriks and trailing whitespaces.  The single and double asteriks can be removed together with the expression **strip(*'*')**  and then we split the data over the hyphen. In order to find the average, we need to change every entry to a pair of integers.  This is accomplished with the **map(int, [list])** function. The **map** works very well here because each element in the list is also a list, and that is ok for **map**  All this can go into a single list comprehension to make a temporary list of the number pairs 
 ```
 days=[list(map(int,days.strip(' ').strip(*'*').split('-'))) for days in farm['Days']]##change all entries to pairs of integers
 ```
