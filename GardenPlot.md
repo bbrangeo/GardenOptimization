@@ -172,4 +172,4 @@ This now brings the farm data frame his
 32                Watermelon   90.0            varies  with cultivar
 33            Winter  Squash  102.5            varies  with cultivar
 ```
-Last step in cleaning the data is to quantify the final column of sizes. 
+Next step in cleaning the data is to quantify the final column of sizes. This is not as straightforward as computing the averages since many of the plants have the entry "varies with cultivar", which means there is a large variation depending on which variety and which lineage of seeds you have.  So in this case, we can fill in the data with estimated values based on educated guesses.  Turns out I know a bit about gardening [js gardens portfolio](instagram.com/jsgardens), so the numbers will be appropriate.  The value for the size should represent the plant at it's largest size during harvest.
