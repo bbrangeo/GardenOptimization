@@ -383,7 +383,20 @@ pp.show()
 ![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.PNG)
 
 
-To plan out the space for the growing season,  we need to include how long each plan will be there.  Most of the plants have a growth rate between 30-60 days, and we chose only those plants that grow in less than 61 days.  This means that each plant will be there for at most two months, and this helps index our spacing according to our subplot structure.  (**class variables would be much more appropriate here, maybe in the next version...**).  Lets add the parameter 'month' to the **plant** function.   Then, in order to index the months onto the 3,2 grid of plots, a bit of math and headscratching leads us to **[math.floor(monthIndex)][monthIndex%2]** to place the plant in the right month
+To plan out the space for the growing season,  we need to include how long each plan will be there.  Most of the plants have a growth rate between 30-60 days, and we chose only those plants that grow in less than 61 days.  This means that each plant will be there for at most two months, and this helps index our spacing according to our subplot structure.  (**class variables would be much more appropriate here, maybe in the next version...**).  Lets add the parameter 'month' to the **plant** function.   Then, in order to index the months onto the 3,2 grid of plots, a bit of math and headscratching leads us to **[math.floor(monthIndex)][monthIndex%2]** to place the plant in the right month.  And if the number of days is more than thrity, we put the plant into the next months plot as well. The code looks like this now
+```python
+def plant(veg,month):
+    global current_y
+    m=months.index(month)
+    for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
+        ax[math.floor(m/2)][m%2].add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+    if plants.loc[veg].Days>30:
+        for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
+            ax[math.floor((m+1)/2)][(m+1)%2].add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+            
+    current_y=current_y+(plants.loc[veg].Size)
+    ```
+In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn lettuces this quick).  
 
 
 
