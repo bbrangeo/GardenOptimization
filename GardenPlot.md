@@ -217,65 +217,6 @@ Then finally here is our farm data frame.
 32                Watermelon   90.0  20.00
 33            Winter  Squash  102.5  20.00
 ```
-
-# Part 3 - Modeling a Garden Space #
-To decide what to plant, we will set up a graphical description of what plants are growing and when.  For this, we'll start a new file that can join up with the data set later.  Let's import a few packages that we need
-```python
-import numpy as np
-import matplotlib
-from matplotlib.patches import Circle, Wedge, Polygon
-import matplotlib.pyplot as pp
-from matplotlib.collections import PatchCollection
-import pandas as pd
-```
-The polygon package will draw boxes that represent the size of the plants.  In my old garden, we had a 4 foot by 8 foot plot.  We can make this into a figure element with a little bit of padding around the edges using matplotlib.  For ease of visualization of the locations, we can also plot a grid of dots on top of the box using a list comprehenstion to generate list of discrete lists, and then a for loop to plot the discrete points.   
-```python
-fig=pp.figure(figsize=(10,5))
-ax=fig.gca()
-
-pp.xlim(-5,75)
-pp.ylim(-5,50)
-
-x=np.arange(0,72,1)
-y=[[i for xp in x] for i in range(48)]
-for i in range(48):
-    pp.plot(x,y[i],'bo', markersize=1)
-pp.show()
-```
-![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png)
-
-Next, lets plant some veggies. To optimize the space, we want to keep the spacing tight.  So we make a **current_y** variable that tells us where things are planted.  Then we simply line up the plants along the y direction, and make sure they are spaced by one size of each plant.  We've also added a new row to our data frame to give each plant its own color.  Heres the code and how a box will look 
-```python
-
-###track y value
-current_y=0
-###define a function to place the plants in the garden box
-def plant(veg):
-    global current_y
-    for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
-        ax.add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
-    current_y=current_y+(plants.loc[veg].Size)
-    
-plant('Beet')
-plant('Beet')
-plant('Spinach')
-plant('Spinach')
-plant('Radish  Spring')
-plant('Lettuce  (leaf)')
-plant('Radish  Spring')
-plant('Broccoli')
-plant('Turnip')
-pp.show()
-```
-![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest1.png)
-
-Now we will want to show the garden plot for a series of months.  We can do with with a subplot, and our grid constructor will go into a nested for loop structure.
-
-The circles that represent the plants are added with a few lines of the **polygon** function, and changing the dots to green because, well because its a garden!
-
-```
-
-
 Pretty good, so now we need to make a list of the plants that are planted, with their sizes, and see how they can fill the space.  Let change our data frame so that we can index based on the vegetable name.  We can make a new data frame, set the index as the list of column values from our original data frame, and then transfer the columns for 'Days' and 'Size'
 ```python
 farm2=pd.DataFrame(index=farm['Veg'].tolist(), columns =('Days','Size'))
@@ -334,3 +275,113 @@ Snap  Bean (Green Bean)  60.0  12.0
 Spinach                  52.5   5.0
 Turnip                   57.5   2.0
 ```
+
+# Part 3 - Modeling a Garden Space #
+To decide what to plant, we will set up a graphical description of what plants are growing and when. Let's import a few packages that we need
+```python
+import numpy as np
+import matplotlib
+from matplotlib.patches import Circle, Wedge, Polygon
+import matplotlib.pyplot as pp
+from matplotlib.collections import PatchCollection
+import pandas as pd
+```
+In my old garden, we had a 4 foot by 8 foot plot.  We can make this into a figure element with a little bit of padding around the edges using matplotlib.  For ease of visualization of the locations, we can also plot a grid of dots on top of the box using a list comprehenstion to generate list of discrete lists, and then a for loop to plot the discrete points.   
+```python
+fig=pp.figure(figsize=(10,5))
+ax=fig.gca()
+
+pp.xlim(-5,75)
+pp.ylim(-5,50)
+
+x=np.arange(0,72,1)
+y=[[i for xp in x] for i in range(48)]
+for i in range(48):
+    pp.plot(x,y[i],'bo', markersize=1)
+pp.show()
+```
+![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png)
+
+Next, lets plant some veggies! To optimize the space, we want to keep the spacing tight.  So we make a **current_y** variable that tells us where things are planted.  Then we simply line up the plants along the y direction, and make sure they are spaced by one size of each plant.  We've also added a new row to our data frame to give each plant its own color.  Heres the code and how a box will look 
+```python
+
+###track y value
+current_y=0
+###define a function to place the plants in the garden box
+def plant(veg):
+    global current_y
+    for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
+        ax.add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+    current_y=current_y+(plants.loc[veg].Size)
+    
+plant('Beet')
+plant('Beet')
+plant('Spinach')
+plant('Spinach')
+plant('Radish  Spring')
+plant('Lettuce  (leaf)')
+plant('Radish  Spring')
+plant('Broccoli')
+plant('Turnip')
+pp.show()
+```
+![Example of rows of plants in the garden box](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest1.png)
+
+Now we will want to show the garden plot for a series of months.  We can do with with a subplot, and our grid constructor will go into a nested for loop structure, and titles will be popped from a list of months. The array of plots is made with a subplot element, and remove the tick marks because they are not descriptive and take up space  That together looks like this
+```python
+plants=pd.read_csv('plantlist.csv',index_col=0)
+colors=['red', 'orange', 'blue', 'pink', 'grey', 'cyan', 'purple', 'pink', 'green', 'brown']
+plants['Color']=colors
+print(plants)
+
+months=['Sept','August','July','Jun','May','April']
+###initialize figure window a bit larger than the graph area
+
+
+fig,ax=pp.subplots(3,2,figsize=(8,8))
+pp.xlim(-5,75)
+pp.ylim(-5,50)
+
+##plot a unit spaced grid of dots for a 72 inch by 48 inch box with month as title
+x=np.arange(0,73,1)
+##this makes a list of points along the horizontal for each y value
+y=[[i for xp in x] for i in range(49)]
+
+###for each subplot
+for j in range(3):
+    for k in range(2):
+         ax[j][k].set_xticklabels([])
+         ax[j][k].set_yticklabels([])
+         ax[j][k].set_xticks([])
+         ax[j][k].set_yticks([])
+         ax[j][k].set_title(months.pop())
+         for i in range(49):
+            ax[j][k].plot(x,y[i],'go', markersize=.5)
+           
+            
+
+###track y value
+current_y=0
+###define a function to place the plants in the garden box
+def plant(veg):
+    global current_y
+    for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
+        ax[0][0].add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+    current_y=current_y+(plants.loc[veg].Size)
+    
+plant('Beet')
+plant('Beet')
+plant('Spinach')
+plant('Spinach')
+plant('Radish  Spring')
+plant('Lettuce  (leaf)')
+plant('Radish  Spring')
+plant('Broccoli')
+plant('Turnip')
+pp.show()
+
+```
+![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.png)
+
+
+
