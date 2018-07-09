@@ -327,14 +327,14 @@ pp.show()
 ```
 ![Example of rows of plants in the garden box](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest1.png)
 
-Now we will want to show the garden plot for a series of months.  We can do with with a subplot, and our grid constructor will go into a nested for loop structure, and titles will be popped from a list of months. The array of plots is made with a subplot element, and remove the tick marks because they are not descriptive and take up space  That together looks like this
+Now we will want to show the garden plot for a series of months.  We can do with with a subplot, and our grid constructor will go into a nested for loop structure, and titles will be pulled from a list of months. We need to keep track of our subplot layout in order to number the graphs correctly.  Otherwise, a **pop** function could be used and the list simply reversed. The array of plots is made with a subplot element, and remove the tick marks because they are not descriptive and take up space  That together looks like this
 ```python
 plants=pd.read_csv('plantlist.csv',index_col=0)
 colors=['red', 'orange', 'blue', 'pink', 'grey', 'cyan', 'purple', 'pink', 'green', 'brown']
 plants['Color']=colors
 print(plants)
 
-months=['Sept','August','July','Jun','May','April']
+months=['April','May','June','July','Aug','Sept']
 ###initialize figure window a bit larger than the graph area
 
 
@@ -354,7 +354,7 @@ for j in range(3):
          ax[j][k].set_yticklabels([])
          ax[j][k].set_xticks([])
          ax[j][k].set_yticks([])
-         ax[j][k].set_title(months.pop())
+         ax[j][k].set_title(months[(2*j+k)])
          for i in range(49):
             ax[j][k].plot(x,y[i],'go', markersize=.5)
            
@@ -379,7 +379,6 @@ plant('Radish  Spring')
 plant('Broccoli')
 plant('Turnip')
 pp.show()
-
 ```
 ![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.PNG)
 
