@@ -247,8 +247,6 @@ pp.show()
 Next, lets plant some veggies. To optimize the space, we want to keep the spacing tight.  So we make a **current_y** variable that tells us where things are planted.  Then we simply line up the plants along the y direction, and make sure they are spaced by one size of each plant.  We've also added a new row to our data frame to give each plant its own color.  Heres the code and how a box will look 
 ```python
 
-
-
 ###track y value
 current_y=0
 ###define a function to place the plants in the garden box
@@ -269,7 +267,7 @@ plant('Broccoli')
 plant('Turnip')
 pp.show()
 ```
-
+![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest1.png)
 
 Now we will want to show the garden plot for a series of months.  We can do with with a subplot, and our grid constructor will go into a nested for loop structure.
 
