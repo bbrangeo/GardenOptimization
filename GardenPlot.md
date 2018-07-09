@@ -244,18 +244,39 @@ pp.show()
 ```
 ![Empty Garden Box](https://github.com/jeffsecor/GardenOptimization/blob/master/emptybox.png)
 
-
-The polygons that represent the plants are added with a few lines of the **polygon** function, and changing the dots to green because, well because its a garden!
+Next, lets plant some veggies. To optimize the space, we want to keep the spacing tight.  So we make a **current_y** variable that tells us where things are planted.  Then we simply line up the plants along the y direction, and make sure they are spaced by one size of each plant.  We've also added a new row to our data frame to give each plant its own color.  Heres the code and how a box will look 
 ```python
-patches=[]
-for i in range(50):
-    polygon = Polygon(([2,2],[2,14],[14,14],[14,2]), True)
-    patches.append(polygon)
 
-p = PatchCollection(patches)
-ax.add_collection(p)
+
+
+###track y value
+current_y=0
+###define a function to place the plants in the garden box
+def plant(veg):
+    global current_y
+    for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
+        ax.add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+    current_y=current_y+(plants.loc[veg].Size)
+    
+plant('Beet')
+plant('Beet')
+plant('Spinach')
+plant('Spinach')
+plant('Radish  Spring')
+plant('Lettuce  (leaf)')
+plant('Radish  Spring')
+plant('Broccoli')
+plant('Turnip')
+pp.show()
 ```
-![Plant Example on the Grid](https://github.com/jeffsecor/GardenOptimization/blob/master/examplebox.png)
+
+
+Now we will want to show the garden plot for a series of months.  We can do with with a subplot, and our grid constructor will go into a nested for loop structure.
+
+The circles that represent the plants are added with a few lines of the **polygon** function, and changing the dots to green because, well because its a garden!
+
+```
+
 
 Pretty good, so now we need to make a list of the plants that are planted, with their sizes, and see how they can fill the space.  Let change our data frame so that we can index based on the vegetable name.  We can make a new data frame, set the index as the list of column values from our original data frame, and then transfer the columns for 'Days' and 'Size'
 ```python
