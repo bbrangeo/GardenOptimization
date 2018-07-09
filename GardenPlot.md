@@ -396,7 +396,8 @@ def plant(veg,month):
             
     current_y=current_y+(plants.loc[veg].Size)
  ```
-In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn lettuces this quick).  
+In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn lettuces this quick).  Then plant the rest of the box in April and hwere is what we get
+![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/testplot.PNG)
 
 
 
