@@ -381,7 +381,7 @@ plant('Turnip')
 pp.show()
 
 ```
-![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.png)
+![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.PNG)
 
 
 
