@@ -395,7 +395,7 @@ def plant(veg,month):
             ax[math.floor((m+1)/2)][(m+1)%2].add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
             
     current_y=current_y+(plants.loc[veg].Size)
-    ```
+ ```
 In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn lettuces this quick).  
 
 
