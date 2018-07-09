@@ -383,4 +383,7 @@ pp.show()
 ![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.PNG)
 
 
+To plan out the space for the growing season,  we need to include how long each plan will be there.  Most of the plants have a growth rate between 30-60 days, and we chose only those plants that grow in less than 61 days.  This means that each plant will be there for at most two months, and this helps index our spacing according to our subplot structure.  (**class variables would be much more appropriate here, maybe in the next version...**).  Lets add the parameter 'month' to the **plant** function.   Then, in order to index the months onto the 3,2 grid of plots, a bit of math and headscratching leads us to **[math.floor(monthIndex)][monthIndex%2]** to place the plant in the right month
+
+
 
