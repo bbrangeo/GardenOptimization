@@ -574,7 +574,9 @@ fig.legend(handles=leg, ncol=4,loc=('upper center'))
 pp.show()
 ```
 
-And finally, we can add a tally column to the data frame, and then inster **plants.at[veg,'NumberPlanted']+=1** into the planting loop so that we can tall the veggies.  Final count is....
+And finally, we can add a tally column to the data frame, and then insert **plants.at[veg,'NumberPlanted']+=1** into the planting loop so that we can tally the hard work of planting all these veggies.
+
+Final count is....
 (432, 'Beet'), (40, 'Broccoli'), (16, 'Cucumber  (slicing)'), (84, 'Lettuce  (leaf)'), (0, 'Okra'), (360, 'Radish  Spring'), (216, 'Radish  Winter'), (12, 'Snap  Bean (Green Bean)'), (196, 'Spinach'), (0, 'Turnip') for a total of **1356 plants!!**.  Happy planting everyone
 
 
