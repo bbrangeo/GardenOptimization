@@ -440,6 +440,140 @@ pp.show()
 In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn radishes and lettuces this quick). This way there will be some turnover in May because these will have already been harvested. Then if we plant the rest of the box for the month of April this is what we get
 ![TestPlotWithLegend](https://github.com/jeffsecor/GardenOptimization/blob/master/testplot.PNG)
 
+Notice that there is a gap in the middle now because some plants are finished in 30 days.  This is exactly what we need.  We can see where we have space to plant the next crop.  A few iterations of the program with additional plantings gets us to our final planting plan.  
+
+![Final Plot](https://github.com/jeffsecor/GardenOptimization/blob/master/finalplot.PNG)
+
+and the final code for the graphical portion is:
+```python
+import numpy as np
+import matplotlib
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as pp
+from matplotlib.collections import PatchCollection
+import pandas as pd
+import math
+
+plants=pd.read_csv('plantlist.csv',index_col=0)
+colors=['red', 'orange', 'blue', 'lawngreen', 'slateblue', 'cyan', 'purple', 'goldenrod', 'green', 'peru']#colors for the graphic
+plants['Color']=colors
+print(plants)
+months=['April','May','June','July','Aug','Sept']
+
+
+##initialize figure window a bit larger than the graph area
+fig,ax=pp.subplots(3,2,figsize=(8,8))
+pp.xlim(-5,75)
+pp.ylim(-5,50)
+
+#plot a unit spaced grid of dots for a 72 inch by 48 inch box with month as title
+x=np.arange(0,73,1)
+#this makes a list of points along the horizontal for each y value
+y=[[i for xp in x] for i in range(49)]
+
+#for each subplot remove ticks and set title to appropriate month
+for j in range(3):
+    for k in range(2):
+         ax[j][k].set_xticklabels([])
+         ax[j][k].set_yticklabels([])
+         ax[j][k].set_xticks([])
+         ax[j][k].set_yticks([])
+         ax[j][k].set_title(months[(2*j+k)])
+         for i in range(49):
+            ax[j][k].plot(x,y[i],'go', markersize=.5)
+           
+            
+
+#track y value
+current_y=0
+current_veglist=[]
+y_occupied=[[False for x in range(47)] for m in months]
+
+#define a function to place the plants in the garden box
+def plant(veg,month):
+    if veg not in current_veglist:
+        current_veglist.append(veg) ##compiles aggegate list of all plants planted
+
+    global current_y
+    current_y=y_occupied[months.index(month)].index(False)
+    m=months.index(month)
+
+    for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size): ##horizontal x values spaced by the plant diameter
+        ax[math.floor(m/2)][m%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))###plants row of plants as circles
+        i=current_y ##to make a list of occupied spaces
+        while i <current_y+plants.loc[veg].Size:
+            y_occupied[months.index(month)][i]=True
+            i+=1
+
+    if plants.loc[veg].Days>30: ### puts the plant in next months plot if days >30 and occupies the spot 
+        for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
+            ax[math.floor((m+1)/2)][(m+1)%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+            i=current_y
+            while i <current_y+plants.loc[veg].Size:
+                y_occupied[months.index(month)+1][i]=True
+                i+=1
+
+    current_y=current_y+(plants.loc[veg].Size) ##update current spot for next veg to be planted
+
+#springtime!!  
+plant('Beet','April')
+plant('Beet','April')
+plant('Spinach','April')
+plant('Spinach','April')
+plant('Radish  Spring','April')
+plant('Radish  Spring','April')
+plant('Radish  Spring','April')
+plant('Radish  Spring','April')
+plant('Lettuce  (leaf)','April')
+plant('Lettuce  (leaf)','April')
+plant('Lettuce  (leaf)','April')
+plant('Spinach','April')
+plant('Beet','April')
+
+##put in the big summer plants
+plant('Cucumber  (slicing)','May')
+plant('Lettuce  (leaf)','May')
+plant('Radish  Spring','May')
+plant('Radish  Spring','May')
+
+##more big summer plants and filling left over space
+plant('Snap  Bean (Green Bean)','June')
+plant('Cucumber  (slicing)','July')
+plant('Radish  Spring','June')
+plant('Radish  Spring','June')
+plant('Radish  Spring','June')
+plant('Broccoli','June')
+plant('Broccoli','June')
+
+#lettuce to fill the gap under the cucumbers
+plant('Lettuce  (leaf)','July')
+
+#plants for the cool fall weather
+plant('Spinach','Aug')
+plant('Spinach','Aug')
+plant('Beet','Aug')
+plant('Beet','Aug')
+plant('Beet','Aug')
+plant('Spinach','Aug')
+plant('Spinach','Aug')
+plant('Radish  Winter','Aug')
+plant('Radish  Winter','Aug')
+plant('Radish  Winter','Aug')
+
+#september planting, this could have bigger plants, but this program ends in september.  maybe we should build a greenhouse?
+plant('Lettuce  (leaf)','Sept')
+plant('Lettuce  (leaf)','Sept')
+plant('Radish  Spring','Sept')
+
+leg=[mpatches.Patch(color=plants.loc[plant].Color, label= plant) for plant in current_veglist]##custom legend 
+fig.legend(handles=leg, ncol=4,loc=('upper center'))
+
+pp.show()
+
+
+
+```
+
 
 
 
