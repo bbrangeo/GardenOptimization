@@ -457,7 +457,7 @@ fig.legend(handles=leg, ncol=5,loc=('upper center'))
 pp.show()
  ```
 In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn lettuces this quick).  Then plant the rest of the box in April and hwere is what we get
-![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gardenplot.PNG)
+![TestPlotWithLegend](https://github.com/jeffsecor/GardenOptimization/blob/master/testplot.PNG)
 
 
 
