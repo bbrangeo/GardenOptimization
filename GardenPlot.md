@@ -382,19 +382,79 @@ pp.show()
 ```
 ![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/gridtest2.PNG)
 
+To plan out the space for the growing season,  we need to include how long each plan will be there.  Most of the plants have a growth rate between 30-60 days, and we chose only those plants that grow in less than 61 days.  This means that each plant will be there for at most two months, and this helps index our spacing according to our subplot structure.  (**class variables would be much more appropriate here, maybe in the next version...**).  Lets add the parameter 'month' to the **plant** function.   Then, in order to index the months onto the 3,2 grid of plots, a bit of math and headscratching leads us to **[math.floor(monthIndex)][monthIndex%2]** to place the plant in the right month.  And if the number of days is more than thrity, we put the plant into the next months plot as well.
 
-To plan out the space for the growing season,  we need to include how long each plan will be there.  Most of the plants have a growth rate between 30-60 days, and we chose only those plants that grow in less than 61 days.  This means that each plant will be there for at most two months, and this helps index our spacing according to our subplot structure.  (**class variables would be much more appropriate here, maybe in the next version...**).  Lets add the parameter 'month' to the **plant** function.   Then, in order to index the months onto the 3,2 grid of plots, a bit of math and headscratching leads us to **[math.floor(monthIndex)][monthIndex%2]** to place the plant in the right month.  And if the number of days is more than thrity, we put the plant into the next months plot as well. The code looks like this now
+We can also add a legend through the patches package.  The pathces package is not very user friendly, so this requires a bit of a workaround to make a customized legend..  To do so we define a list of planted plants, and then put that list into a legend and reference the dataframe for the colors.
 ```python
+import numpy as np
+import matplotlib
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as pp
+from matplotlib.collections import PatchCollection
+import pandas as pd
+import math
+
+plants=pd.read_csv('plantlist.csv',index_col=0)
+colors=['red', 'orange', 'blue', 'pink', 'grey', 'cyan', 'purple', 'pink', 'green', 'brown']
+plants['Color']=colors
+print(plants)
+
+months=['April','May','June','July','Aug','Sept']
+###initialize figure window a bit larger than the graph area
+
+
+fig,ax=pp.subplots(3,2,figsize=(8,8))
+pp.xlim(-5,75)
+pp.ylim(-5,50)
+
+##plot a unit spaced grid of dots for a 72 inch by 48 inch box with month as title
+x=np.arange(0,73,1)
+##this makes a list of points along the horizontal for each y value
+y=[[i for xp in x] for i in range(49)]
+
+###for each subplot
+for j in range(3):
+    for k in range(2):
+         ax[j][k].set_xticklabels([])
+         ax[j][k].set_yticklabels([])
+         ax[j][k].set_xticks([])
+         ax[j][k].set_yticks([])
+         ax[j][k].set_title(months[(2*j+k)])
+         for i in range(49):
+            ax[j][k].plot(x,y[i],'go', markersize=.5)
+           
+            
+
+###track y value
+current_y=0
+current_veglist=[]
+###define a function to place the plants in the garden box
 def plant(veg,month):
+    if veg not in current_veglist:
+        current_veglist.append(veg)
     global current_y
     m=months.index(month)
     for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
-        ax[math.floor(m/2)][m%2].add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+        ax[math.floor(m/2)][m%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
     if plants.loc[veg].Days>30:
         for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
-            ax[math.floor((m+1)/2)][(m+1)%2].add_patch(Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
+            ax[math.floor((m+1)/2)][(m+1)%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
             
     current_y=current_y+(plants.loc[veg].Size)
+plant('Beet','April')
+plant('Beet','April')
+plant('Spinach','April')
+plant('Spinach','April')
+plant('Radish  Spring','April')
+plant('Lettuce  (leaf)','April')
+plant('Radish  Spring','April')
+plant('Broccoli','April')
+plant('Turnip','April')
+plant('Cucumber  Slicing','April')
+
+leg=[mpatches.Patch(color=plants.loc[plant].Color, label= plant) for plant in current_veglist]
+fig.legend(handles=leg, ncol=5,loc=('upper center'))
+pp.show()
  ```
 In order to make this a bit more interesting, lets change the number of days for the spring radish and lettuce to 29.  (Actually, Ive grownn lettuces this quick).  Then plant the rest of the box in April and hwere is what we get
 ![Subplot array](https://github.com/jeffsecor/GardenOptimization/blob/master/testplot.PNG)
