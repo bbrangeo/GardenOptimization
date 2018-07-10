@@ -457,7 +457,8 @@ import math
 plants=pd.read_csv('plantlist.csv',index_col=0)
 colors=['red', 'orange', 'blue', 'lawngreen', 'slateblue', 'cyan', 'purple', 'goldenrod', 'green', 'peru']#colors for the graphic
 plants['Color']=colors
-print(plants)
+plants['NumberPlanted']=[0 for plant in range(len(plants))] #new column to tally the number of plants
+
 months=['April','May','June','July','Aug','Sept']
 
 
@@ -500,7 +501,8 @@ def plant(veg,month):
 
     for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size): ##horizontal x values spaced by the plant diameter
         ax[math.floor(m/2)][m%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))###plants row of plants as circles
-        i=current_y ##to make a list of occupied spaces
+       plants.at[veg,'NumberPlanted']+=1 #tally the number of plants #tally the plants
+       i=current_y ##to make a list of occupied spaces
         while i <current_y+plants.loc[veg].Size:
             y_occupied[months.index(month)][i]=True
             i+=1
@@ -508,8 +510,9 @@ def plant(veg,month):
     if plants.loc[veg].Days>30: ### puts the plant in next months plot if days >30 and occupies the spot 
         for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
             ax[math.floor((m+1)/2)][(m+1)%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
-            i=current_y
-            while i <current_y+plants.loc[veg].Size:
+             plants.at[veg,'NumberPlanted']+=1 #tally the number of plants
+             i=current_y
+             while i <current_y+plants.loc[veg].Size:
                 y_occupied[months.index(month)+1][i]=True
                 i+=1
 
@@ -569,12 +572,10 @@ leg=[mpatches.Patch(color=plants.loc[plant].Color, label= plant) for plant in cu
 fig.legend(handles=leg, ncol=4,loc=('upper center'))
 
 pp.show()
-
-
-
 ```
 
-
+And finally, we can add a tally column to the data frame, and then inster **plants.at[veg,'NumberPlanted']+=1** into the planting loop so that we can tall the veggies.  Final count is....
+(432, 'Beet'), (40, 'Broccoli'), (16, 'Cucumber  (slicing)'), (84, 'Lettuce  (leaf)'), (0, 'Okra'), (360, 'Radish  Spring'), (216, 'Radish  Winter'), (12, 'Snap  Bean (Green Bean)'), (196, 'Spinach'), (0, 'Turnip') for a total of **1356 plants!!**.  Happy planting everyone
 
 
 
