@@ -510,7 +510,6 @@ def plant(veg,month):
     if plants.loc[veg].Days>30: ### puts the plant in next months plot if days >30 and occupies the spot 
         for spot in np.arange((plants.loc[veg].Size)/2,72-((plants.loc[veg].Size)/2)+1,plants.loc[veg].Size):
             ax[math.floor((m+1)/2)][(m+1)%2].add_patch(mpatches.Circle((spot,current_y+((plants.loc[veg].Size)/2)),(plants.loc[veg].Size)/2,color=plants.loc[veg].Color,label=veg,alpha=1))
-             plants.at[veg,'NumberPlanted']+=1 #tally the number of plants
              i=current_y
              while i <current_y+plants.loc[veg].Size:
                 y_occupied[months.index(month)+1][i]=True
@@ -577,7 +576,7 @@ pp.show()
 And finally, we can add a tally column to the data frame, and then insert **plants.at[veg,'NumberPlanted']+=1** into the planting loop so that we can tally the hard work of planting all these veggies.
 
 Final count is....
-(432, 'Beet'), (40, 'Broccoli'), (16, 'Cucumber  (slicing)'), (84, 'Lettuce  (leaf)'), (0, 'Okra'), (360, 'Radish  Spring'), (216, 'Radish  Winter'), (12, 'Snap  Bean (Green Bean)'), (196, 'Spinach'), (0, 'Turnip') for a total of **1356 plants!!**.  Happy planting everyone
+(216, 'Beet'), (20, 'Broccoli'), (8, 'Cucumber  (slicing)'), (84, 'Lettuce  (leaf)'), (0, 'Okra'), (360, 'Radish  Spring'), (108, 'Radish  Winter'), (6, 'Snap  Bean (Green Bean)'), (98, 'Spinach'), (0, 'Turnip') for a total of **900 plants!!**.  Happy planting everyone
 
 
 
